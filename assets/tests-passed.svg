@@ -1,0 +1,25 @@
+<svg width="851" height="208" viewBox="0 0 851 208" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d1559" />
+      <stop offset="100%" stop-color="#24116d" />
+    </linearGradient>
+    <style>
+      .terminal {
+        font-family: 'Fira Code', 'Source Code Pro', 'Courier New', monospace;
+        font-size: 18px;
+        fill: #e0e6ff;
+      }
+      .prompt { fill: #8be9fd; }
+      .command { fill: #ff79c6; }
+      .result { fill: #50fa7b; }
+    </style>
+  </defs>
+  <rect width="851" height="208" rx="14" ry="14" fill="url(#bg)" />
+  <text x="24" y="48" class="terminal"><tspan class="prompt">PS C:\> </tspan><tspan class="command">flutter test test/calculation_test.dart</tspan></text>
+  <text x="24" y="76" class="terminal"><tspan class="result">All tests passed!</tspan></text>
+  <text x="24" y="110" class="terminal"><tspan class="prompt">PS C:\> </tspan><tspan class="command">flutter test test/landing_page_test.dart</tspan></text>
+  <text x="24" y="138" class="terminal"><tspan class="result">All tests passed!</tspan></text>
+  <text x="24" y="172" class="terminal"><tspan class="prompt">PS C:\> </tspan><tspan class="command">flutter test test/frequency_wavelength_page_test.dart</tspan></text>
+  <text x="24" y="200" class="terminal"><tspan class="result">All tests passed!</tspan></text>
+</svg>
