@@ -1,16 +1,16 @@
-# physics_app
+# Physics App
 
-A new Flutter project.
+![Terminal showing all Flutter tests passing](assets/tests-passed.svg)
 
-## Getting Started
+## Overview
+A lightweight Flutter companion app that helps students explore core physics concepts through quick calculations and visual summaries.
 
-This project is a starting point for a Flutter application.
+## Features
+- Interactive calculators for kinematics, waves, and other foundational topics.
+- Clean landing page that highlights recent concepts and resources.
+- Cross-platform Flutter build that runs on mobile, web, and desktop with a shared codebase.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Run it yourself
+1. Ensure Flutter is installed and run `flutter pub get`.
+2. Launch the experience with `flutter run` for your target platform.
+3. Verify everything with `flutter test` to execute the provided unit suite.
