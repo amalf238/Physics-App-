@@ -199,6 +199,30 @@ void main() {
       // Assert
       expect(pulseDuration, 99); // Truncated, not rounded
     });
+
+    test('should return zero when time is zero', () {
+      // Arrange
+      const timeTaken = 0.0;
+      const scalingFactor = 0.1;
+
+      // Act
+      final pulseDuration = (timeTaken * scalingFactor * 500).toInt();
+
+      // Assert
+      expect(pulseDuration, 0);
+    });
+
+    test('should calculate pulse duration with different scaling factor', () {
+      // Arrange
+      const timeTaken = 4.0;
+      const scalingFactor = 0.2;
+
+      // Act
+      final pulseDuration = (timeTaken * scalingFactor * 500).toInt();
+
+      // Assert
+      expect(pulseDuration, 400);
+    });
   });
 
   group('Combined Physics Calculations Tests', () {
