@@ -293,6 +293,24 @@ void main() {
       // Assert
       expect(find.text('Calculated Velocity: 0.00 m/s'), findsOneWidget);
     });
+
+    testWidgets('should update velocity with very large values', (WidgetTester tester) async {
+      // Arrange
+      await tester.pumpWidget(const MaterialApp(
+        home: FrequencyWavelengthPage(
+          initialFrequency: 40000,
+          initialWavelength: 0.0375,
+        ),
+      ));
+
+      // Act - enter very large values
+      await tester.enterText(find.byType(TextField).first, '1000000');
+      await tester.enterText(find.byType(TextField).last, '5.0');
+      await tester.pump();
+
+      // Assert - velocity should update to 1000000 * 5.0 = 5000000.0
+      expect(find.text('Calculated Velocity: 5000000.00 m/s'), findsOneWidget);
+    });
   });
 
   group('FrequencyWavelengthPage Validation Tests', () {
