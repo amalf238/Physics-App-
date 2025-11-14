@@ -111,6 +111,23 @@ void main() {
       expect(find.byIcon(Icons.waves), findsOneWidget);
       expect(find.byType(AnimatedBuilder), findsWidgets);
     });
+
+    testWidgets('should animate wave icon smoothly over time', (WidgetTester tester) async {
+      // Arrange
+      await tester.pumpWidget(const MyApp());
+
+      // Act - advance animation at different intervals
+      await tester.pump(const Duration(milliseconds: 250));
+      expect(find.byIcon(Icons.waves), findsOneWidget);
+
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(find.byIcon(Icons.waves), findsOneWidget);
+
+      await tester.pump(const Duration(milliseconds: 1000));
+
+      // Assert - icon should remain visible throughout animation
+      expect(find.byIcon(Icons.waves), findsOneWidget);
+    });
   });
 
   group('LandingPage Navigation Tests', () {
@@ -154,6 +171,28 @@ void main() {
       // Assert - should be back on landing page
       expect(find.text('Depth Caculator'), findsOneWidget);
       expect(find.text('Go to Depth Calculator'), findsOneWidget);
+    });
+
+    testWidgets('should handle multiple forward and back navigations', (WidgetTester tester) async {
+      // Arrange
+      await tester.pumpWidget(const MyApp());
+
+      // Act - navigate forward
+      await tester.tap(find.text('Go to Depth Calculator'));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Current Velocity:'), findsOneWidget);
+
+      // Navigate back
+      await tester.tap(find.byIcon(Icons.arrow_back));
+      await tester.pumpAndSettle();
+      expect(find.text('Go to Depth Calculator'), findsOneWidget);
+
+      // Navigate forward again
+      await tester.tap(find.text('Go to Depth Calculator'));
+      await tester.pumpAndSettle();
+
+      // Assert - should be on calculator page again
+      expect(find.textContaining('Current Velocity:'), findsOneWidget);
     });
   });
 
@@ -345,6 +384,25 @@ void main() {
         matching: find.byType(Text),
       ));
       expect(text.data, 'Go to Depth Calculator');
+    });
+
+    testWidgets('button should remain visible after animation cycles', (WidgetTester tester) async {
+      // Arrange
+      await tester.pumpWidget(const MyApp());
+
+      // Act - advance animation multiple times
+      await tester.pump(const Duration(seconds: 1));
+      await tester.pump(const Duration(seconds: 2));
+      await tester.pump(const Duration(seconds: 3));
+
+      // Assert - button should still be visible and tappable
+      expect(find.text('Go to Depth Calculator'), findsOneWidget);
+      expect(find.byType(ElevatedButton), findsOneWidget);
+
+      // Verify it's still functional
+      await tester.tap(find.byType(ElevatedButton));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Current Velocity:'), findsOneWidget);
     });
   });
 }
