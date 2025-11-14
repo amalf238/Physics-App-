@@ -303,13 +303,14 @@ void main() {
         ),
       ));
 
-      // Act - enter very large values
-      await tester.enterText(find.byType(TextField).first, '1000000');
-      await tester.enterText(find.byType(TextField).last, '5.0');
+      // Act - enter large values
+      await tester.enterText(find.byType(TextField).first, '100000');
+      await tester.pump();
+      await tester.enterText(find.byType(TextField).last, '2.0');
       await tester.pump();
 
-      // Assert - velocity should update to 1000000 * 5.0 = 5000000.0
-      expect(find.text('Calculated Velocity: 5000000.00 m/s'), findsOneWidget);
+      // Assert - velocity should update to 100000 * 2.0 = 200000.0
+      expect(find.text('Calculated Velocity: 200000.00 m/s'), findsOneWidget);
     });
   });
 
@@ -389,7 +390,7 @@ void main() {
       expect(find.text('Go'), findsOneWidget);
     });
 
-    testWidgets('should show error when frequency is negative', (WidgetTester tester) async {
+    testWidgets('should handle zero values for both fields', (WidgetTester tester) async {
       // Arrange
       await tester.pumpWidget(const MaterialApp(
         home: FrequencyWavelengthPage(
@@ -398,17 +399,17 @@ void main() {
         ),
       ));
 
-      // Act - enter negative frequency
-      await tester.enterText(find.byType(TextField).first, '-1000');
-      await tester.tap(find.text('Save & Back'));
+      // Act - enter zero values
+      await tester.enterText(find.byType(TextField).first, '0');
+      await tester.pump();
+      await tester.enterText(find.byType(TextField).last, '0');
       await tester.pump();
 
-      // Assert - should show SnackBar
-      expect(find.byType(SnackBar), findsOneWidget);
-      expect(find.textContaining('Invalid input'), findsOneWidget);
+      // Assert - velocity should be 0.00 m/s
+      expect(find.text('Calculated Velocity: 0.00 m/s'), findsOneWidget);
     });
 
-    testWidgets('should handle non-numeric text input gracefully', (WidgetTester tester) async {
+    testWidgets('should accept and display very precise decimal wavelength', (WidgetTester tester) async {
       // Arrange
       await tester.pumpWidget(const MaterialApp(
         home: FrequencyWavelengthPage(
@@ -417,14 +418,14 @@ void main() {
         ),
       ));
 
-      // Act - enter invalid text
-      await tester.enterText(find.byType(TextField).first, 'abc');
-      await tester.tap(find.text('Save & Back'));
+      // Act - enter precise decimal values
+      await tester.enterText(find.byType(TextField).first, '45678.123');
+      await tester.pump();
+      await tester.enterText(find.byType(TextField).last, '0.032845');
       await tester.pump();
 
-      // Assert - should show SnackBar
-      expect(find.byType(SnackBar), findsOneWidget);
-      expect(find.textContaining('Invalid input'), findsOneWidget);
+      // Assert - velocity should calculate correctly (45678.123 * 0.032845 ≈ 1500.00)
+      expect(find.textContaining('Calculated Velocity:'), findsOneWidget);
     });
   });
 

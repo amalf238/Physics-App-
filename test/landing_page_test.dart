@@ -184,7 +184,8 @@ void main() {
 
       // Navigate back
       await tester.tap(find.byIcon(Icons.arrow_back));
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
       expect(find.text('Go to Depth Calculator'), findsOneWidget);
 
       // Navigate forward again
