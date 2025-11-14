@@ -299,5 +299,29 @@ void main() {
       // Assert
       expect(velocity, -1500.0); // Mathematically correct, physically invalid
     });
+
+    test('should handle extremely precise decimal values', () {
+      // Arrange
+      const frequency = 123456.789123;
+      const wavelength = 0.012345678;
+
+      // Act
+      final velocity = frequency * wavelength;
+
+      // Assert
+      expect(velocity, closeTo(1524.157, 0.001));
+    });
+
+    test('should handle depth calculation with very small values', () {
+      // Arrange
+      const velocity = 1500.0;
+      const timeTaken = 0.001; // 1 millisecond
+
+      // Act
+      final depth = (velocity * timeTaken) / 2;
+
+      // Assert
+      expect(depth, 0.75); // 0.75 meters or 75 cm
+    });
   });
 }
