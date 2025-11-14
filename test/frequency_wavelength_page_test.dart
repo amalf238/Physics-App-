@@ -370,6 +370,44 @@ void main() {
       // Assert - should navigate back successfully
       expect(find.text('Go'), findsOneWidget);
     });
+
+    testWidgets('should show error when frequency is negative', (WidgetTester tester) async {
+      // Arrange
+      await tester.pumpWidget(const MaterialApp(
+        home: FrequencyWavelengthPage(
+          initialFrequency: 40000,
+          initialWavelength: 0.0375,
+        ),
+      ));
+
+      // Act - enter negative frequency
+      await tester.enterText(find.byType(TextField).first, '-1000');
+      await tester.tap(find.text('Save & Back'));
+      await tester.pump();
+
+      // Assert - should show SnackBar
+      expect(find.byType(SnackBar), findsOneWidget);
+      expect(find.textContaining('Invalid input'), findsOneWidget);
+    });
+
+    testWidgets('should handle non-numeric text input gracefully', (WidgetTester tester) async {
+      // Arrange
+      await tester.pumpWidget(const MaterialApp(
+        home: FrequencyWavelengthPage(
+          initialFrequency: 40000,
+          initialWavelength: 0.0375,
+        ),
+      ));
+
+      // Act - enter invalid text
+      await tester.enterText(find.byType(TextField).first, 'abc');
+      await tester.tap(find.text('Save & Back'));
+      await tester.pump();
+
+      // Assert - should show SnackBar
+      expect(find.byType(SnackBar), findsOneWidget);
+      expect(find.textContaining('Invalid input'), findsOneWidget);
+    });
   });
 
   group('FrequencyWavelengthPage Navigation Tests', () {
